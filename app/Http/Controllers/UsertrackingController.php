@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\usertracking;
 use App\Http\Requests\StoreusertrackingRequest;
 use App\Http\Requests\UpdateusertrackingRequest;
+use App\Models\datapengirim;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UsertrackingController extends Controller
 {
@@ -18,7 +21,6 @@ class UsertrackingController extends Controller
         return view('usertracking', [
             'usertracking' => usertracking::all()
         ]);
-
     }
 
     /**
@@ -26,9 +28,13 @@ class UsertrackingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        //
+        $data = datapengirim::find($id);
+        $trackings = usertracking::where('Datapengirim_ID', $id)->orderBy('id', 'desc')->get();
+        $id = $id;
+        // dd($trackings);
+        return view('tracking', compact('data', 'trackings', 'id'));
     }
 
     /**
@@ -37,9 +43,17 @@ class UsertrackingController extends Controller
      * @param  \App\Http\Requests\StoreusertrackingRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreusertrackingRequest $request)
+    public function store(Request $request)
     {
-        //
+        $data = new usertracking();
+        $data->Datapengirim_ID = $request->id;
+        $data->user_id = Auth::user()->id;
+        $data->Status = $request->status;
+        $data->Description = $request->desc;
+        $data->Estimated_Delivery = $request->est;
+        $data->Shipping_by = "ChangeUrWaste";
+        $data->save();
+        return redirect()->back();
     }
 
     /**
@@ -63,8 +77,8 @@ class UsertrackingController extends Controller
     {
         $usertracking = usertracking::all();
 
-        return view('customer',[
-            'usertracking'=>$usertracking
+        return view('customer', [
+            'usertracking' => $usertracking
         ]);
     }
 
@@ -91,4 +105,3 @@ class UsertrackingController extends Controller
         //
     }
 }
-

@@ -7,6 +7,7 @@ use App\HTTP\Controllers\DataBayarController;
 use App\Http\Controllers\DatacustomerController;
 use App\Http\Controllers\DatapengirimController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\UsertrackingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,9 +32,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:admin']], function () {
 });
 
 Route::group(['middleware' => ['auth', 'ceklevel:customer']], function () {
-    Route::get('/customer', function () {
-        return view('customer');
-    });
+    Route::get('/customer', [LoginController::class, 'customer']);
 });
 Route::get('/login', function () {
     return view('login');
@@ -49,6 +48,8 @@ Route::post(
     [LoginController::class, 'authenticate', 'login' => true]
 );
 Route::post('/kirim', [DatapengirimController::class, 'store']);
+Route::get('/tracking/{id}', [UsertrackingController::class, 'create']);
+Route::post('/tracking/store', [UsertrackingController::class, 'store']);
 Route::get('/admwarga', function () {
     return view('admwarga');
 });

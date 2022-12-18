@@ -49,6 +49,7 @@ class DatapengirimController extends Controller
             $point = '{"type": "Point", "coordinates": [' . $long . ', ' . $lat . ']}';
             $data = new datapengirim();
             $data->nama = Auth::user()->name;
+            $data->user_id = Auth::user()->id;
             $data->alamat = $request->address;
             $data->no_hp = $request->phone;
             $data->geometry = DB::Raw("ST_GeomFromGeoJSON('" . $point . "')");;

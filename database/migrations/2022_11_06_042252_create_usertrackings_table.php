@@ -15,9 +15,12 @@ return new class extends Migration
     {
         Schema::create('usertrackings', function (Blueprint $table) {
             $table->id();
+            $table->integer('user_id');
+            $table->string('Datapengirim_ID');
             $table->dateTime('Estimated_Delivery');
             $table->string('Shipping_By');
-            $table->string('Status');
+            $table->enum('Status', ['Confirmed', 'Picking Up', 'On Process', 'Done']);
+            $table->string('Description');
             $table->timestamps();
         });
     }

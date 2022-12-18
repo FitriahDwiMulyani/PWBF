@@ -332,7 +332,8 @@
                                     <input type="hidden" name="long" id="long">
                                 </div>
                                 <div class="form-group">
-                                    <label class="fw-bold mt-3" for="phone">Nomor Handphone yang Dapat Dihubungi</label>
+                                    <label class="fw-bold mt-3" for="phone">Nomor Handphone yang Dapat
+                                        Dihubungi</label>
                                     <input class="form-control" type="text" name="phone" id="phone"
                                         placeholder="Nomor Handphone">
                                     <span>Isi dengan Format 08XXXXXXXXXX</span>
@@ -382,31 +383,62 @@
                         <article class="card">
                             <header class="card-header"> My Orders / Tracking </header>
                             <div class="card-body">
-
-                                <article class="card">
-                                    <div class="card-body row">
-                                        <div class="col"> <strong>Estimated Delivery time:</strong> <br>29 september
-                                            2022
+                                @if (count($requests) > 0)
+                                    @foreach ($requests as $item)
+                                        <div>
+                                            <h5>Request tanggal
+                                                <strong>
+                                                    {{ $item->created_at }}
+                                                </strong>
+                                            </h5>
+                                            <article class="card">
+                                                <div class="card-body row">
+                                                    <div class="col"> <strong>Estimated Delivery time:</strong>
+                                                        <br>
+                                                        {{ $item->lastUpdate != null ? $item->lastUpdate->estimated_delivery : 'Not yet' }}
+                                                    </div>
+                                                    <div class="col">
+                                                        <strong>Shipping BY:</strong>
+                                                        <br>
+                                                        ChangeUrWaste,
+                                                        | <i class="fa fa-phone"></i> 0812 5589 5548
+                                                    </div>
+                                                    <div class="col">
+                                                        <strong>Status:</strong>
+                                                        <br>
+                                                        {{ $item->lastUpdate != null ? $item->lastUpdate->status : 'Not yet' }}
+                                                    </div>
+                                                    <div class="col">
+                                                        <strong>Description:</strong>
+                                                        <br>
+                                                        {{ $item->lastUpdate != null ? $item->lastUpdate->description : 'Not yet' }}
+                                                    </div>
+                                                </div>
+                                            </article>
+                                            <div class="track">
+                                                <div class="step {{ $item->confirmed != null ? 'active' : '' }} ">
+                                                    <span class="icon"> <i class="fa fa-check"></i>
+                                                    </span>
+                                                </div>
+                                                <div class="step {{ $item->pickup != null ? 'active' : '' }}">
+                                                    <span class="icon"> <i class="fa fa-truck"></i>
+                                                    </span>
+                                                </div>
+                                                <div class="step {{ $item->onprocess != null ? 'active' : '' }}">
+                                                    <span class="icon"> <i class="fa fa-user"></i>
+                                                    </span>
+                                                </div>
+                                                <div class="step {{ $item->done != null ? 'active' : '' }}">
+                                                    <span class="icon"> <i class="bi bi-gift-fill"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <hr>
                                         </div>
-                                        <div class="col"> <strong>Shipping BY:</strong> <br> ChangeUrWaste, | <i
-                                                class="fa fa-phone"></i> 0812 5589 5548 </div>
-                                        <div class="col"> <strong>Status:</strong> <br> Picked by the driver </div>
-
-                                    </div>
-                                </article>
-                                <div class="track">
-                                    <div class="step active"> <span class="icon"> <i class="fa fa-check"></i>
-                                        </span></div>
-                                    <div class="step active"> <span class="icon"> <i class="fa fa-user"></i>
-                                        </span></div>
-                                    <div class="step"> <span class="icon"> <i class="fa fa-truck"></i> </span>
-                                    </div>
-                                    <div class="step"> <span class="icon"> <i class="bi bi-gift-fill"></i>
-                                        </span></div>
-                                </div>
-                                <hr>
-                                <a href="#" class="btn btn-warning" data-abc="true"> <i
-                                        class="fa fa-chevron-left"></i> Back to orders</a>
+                                    @endforeach
+                                @else
+                                    <p>Anda belum melakukan transaksi</p>
+                                @endif
                             </div>
                         </article>
                     </div>
