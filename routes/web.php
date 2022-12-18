@@ -33,6 +33,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:customer']], function () {
 });
 
 Route::post('/logout', [LoginController::class, 'logout']);
+
 Route::get('/', function () {
     return view('home');
 });
@@ -53,8 +54,6 @@ Route::post(
 Route::get('/signup', function () {
     return view('signup');
 });
-
-
 
 Route::get('/admwarga', function () {
     return view('admwarga');

@@ -412,7 +412,7 @@
                             </div>
                         </footer>
                     </div>
-                        <!-- End of Footer -->
+                    <!-- End of Footer -->
                     <!-- End of Content Wrapper -->
 
                 </div>
@@ -439,7 +439,8 @@
                             <form action="/logout" method="post">
                                 @csrf
                                 <div class="modal-footer">
-                                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                    <button class="btn btn-secondary" type="button"
+                                        data-dismiss="modal">Cancel</button>
                                     <button type="submit" class="btn btn-primary">Logout</a>
                                 </div>
                             </form>
