@@ -315,7 +315,8 @@
                     <h2>Send My Trash</h2>
                     <p></p>
                 </div>
-                <form>
+                <form action="/kirim" method="POST">
+                    @csrf
                     <div class="row">
                         <div class="col-lg-12" data-aos="fade-up">
                             <div class="resume-item pb-0">
@@ -324,11 +325,17 @@
                                 <div class="form-group">
                                     <label class="fw-bold mt-3" for="address">Alamat</label>
                                     <input class="form-control" type="text" name="address" id="address"
-                                        placeholder="Province, City, District, Postal Code" value="">
+                                        placeholder="Province, City, District, Postal Code">
                                     <span>Jika alamat tidak terdeteksi atau undefined harap isi alamat secara
                                         manual</span>
                                     <input type="hidden" name="lat" id="lat">
                                     <input type="hidden" name="long" id="long">
+                                </div>
+                                <div class="form-group">
+                                    <label class="fw-bold mt-3" for="phone">Nomor Handphone yang Dapat Dihubungi</label>
+                                    <input class="form-control" type="text" name="phone" id="phone"
+                                        placeholder="Nomor Handphone">
+                                    <span>Isi dengan Format 08XXXXXXXXXX</span>
                                 </div>
                             </div>
                         </div>

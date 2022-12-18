@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\datapengirim;
 use App\Http\Requests\StoredatapengirimRequest;
 use App\Http\Requests\UpdatedatapengirimRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class DatapengirimController extends Controller
 {
@@ -17,8 +20,8 @@ class DatapengirimController extends Controller
     {
         $datapengirim = datapengirim::all();
 
-        return view('datadarim',[
-            'pengiriman'=>$datapengirim
+        return view('datadarim', [
+            'pengiriman' => $datapengirim
         ]);
     }
 
@@ -38,9 +41,26 @@ class DatapengirimController extends Controller
      * @param  \App\Http\Requests\StoredatapengirimRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoredatapengirimRequest $request)
+    public function store(Request $request)
     {
-        //
+        try {
+            $lat = $request->post('lat');
+            $long = $request->post('long');
+            $point = '{"type": "Point", "coordinates": [' . $long . ', ' . $lat . ']}';
+            $data = new datapengirim();
+            $data->nama = Auth::user()->name;
+            $data->alamat = $request->address;
+            $data->no_hp = $request->phone;
+            $data->geometry = DB::Raw("ST_GeomFromGeoJSON('" . $point . "')");;
+            $data->tgl_pengiriman = date("Y-m-d H:i:s");
+            $data->jenis_sampah = $request->jenis;
+            $data->berat_sampah = $request->berat;
+            $data->konfirmasi = "Belum Dikonfirmasi";
+            $data->save();
+            return redirect("/customer")->with('success', 'Data Berhasil Ditambahkan');
+        } catch (\Throwable $th) {
+            dd($th);
+        }
     }
 
     /**

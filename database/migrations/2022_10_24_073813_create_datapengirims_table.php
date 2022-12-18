@@ -22,7 +22,7 @@ return new class extends Migration
             $table->date("tgl_pengiriman");
             $table->string("jenis_sampah");
             $table->integer("berat_sampah");
-            $table->string("konfirmasi");
+            $table->string("konfirmasi")->nullable();
             $table->timestamps();
         });
     }
